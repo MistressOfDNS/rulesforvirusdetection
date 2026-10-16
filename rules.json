@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "id": "minecraft-av-starter",
+  "version": 1,
+  "rules": [
+    {
+      "id": "family.fractureiser-name",
+      "title": "Fractureiser family name indicator",
+      "family": "Fractureiser / Fracturiser",
+      "severity": "Critical",
+      "reference": {
+        "label": "fractureiser Mitigation Team technical report",
+        "url": "https://github.com/trigram-mrp/fractureiser/blob/main/docs/tech.md"
+      },
+      "matcher": { "type": "static_strings", "all": [], "any": ["fractureiser", "fracturiser"] }
+    },
+    {
+      "id": "behavior.token-network",
+      "title": "Access-token reference combined with network-capable code",
+      "family": null,
+      "severity": "Critical",
+      "reference": {
+        "label": "MITRE ATT&CK T1528: Steal Application Access Token",
+        "url": "https://attack.mitre.org/techniques/T1528/"
+      },
+      "matcher": { "type": "static_strings", "all": ["accesstoken"], "any": ["java/net/http", "java/net/url", "webhook"] }
+    },
+    {
+      "id": "behavior.user-systemd-unit",
+      "title": "Observed change to a user systemd unit path",
+      "family": null,
+      "severity": "Critical",
+      "reference": {
+        "label": "MITRE ATT&CK T1543.002: Systemd Service",
+        "url": "https://attack.mitre.org/techniques/T1543/002/"
+      },
+      "matcher": {
+        "type": "runtime_evidence",
+        "event_ids": ["fs.create", "fs.write"],
+        "field": "path",
+        "all": ["/.config/systemd/user/"],
+        "any": [".service", ".timer"]
+      }
+    },
+    {
+      "id": "behavior.fractureiser-artifact",
+      "title": "Observed change to a published Fractureiser artifact-name indicator",
+      "family": "Fractureiser artifact indicator",
+      "severity": "Critical",
+      "reference": {
+        "label": "fractureiser Mitigation Team technical report",
+        "url": "https://github.com/trigram-mrp/fractureiser/blob/main/docs/tech.md"
+      },
+      "matcher": {
+        "type": "runtime_evidence",
+        "event_ids": ["fs.create", "fs.write", "fs.remove"],
+        "field": "path",
+        "all": [],
+        "any": ["/libwebgl64.jar"]
+      }
+    }
+  ]
+}
