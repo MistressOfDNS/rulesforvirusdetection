@@ -1,29 +1,46 @@
 {
   "schema_version": 1,
   "id": "minecraft-av-starter",
-  "version": 1,
+  "version": 2,
   "rules": [
     {
       "id": "family.fractureiser-name",
       "title": "Fractureiser family name indicator",
       "family": "Fractureiser / Fracturiser",
-      "severity": "Critical",
+      "severity": "Warning",
       "reference": {
         "label": "fractureiser Mitigation Team technical report",
         "url": "https://github.com/trigram-mrp/fractureiser/blob/main/docs/tech.md"
       },
-      "matcher": { "type": "static_strings", "all": [], "any": ["fractureiser", "fracturiser"] }
+      "matcher": {
+        "type": "static_strings",
+        "all": [],
+        "any": [
+          "fractureiser",
+          "fracturiser"
+        ]
+      }
     },
     {
       "id": "behavior.token-network",
       "title": "Access-token reference combined with network-capable code",
       "family": null,
-      "severity": "Critical",
+      "severity": "Warning",
       "reference": {
         "label": "MITRE ATT&CK T1528: Steal Application Access Token",
         "url": "https://attack.mitre.org/techniques/T1528/"
       },
-      "matcher": { "type": "static_strings", "all": ["accesstoken"], "any": ["java/net/http", "java/net/url", "webhook"] }
+      "matcher": {
+        "type": "static_strings",
+        "all": [
+          "accesstoken"
+        ],
+        "any": [
+          "java/net/http",
+          "java/net/url",
+          "webhook"
+        ]
+      }
     },
     {
       "id": "behavior.user-systemd-unit",
@@ -36,10 +53,18 @@
       },
       "matcher": {
         "type": "runtime_evidence",
-        "event_ids": ["fs.create", "fs.write"],
+        "event_ids": [
+          "fs.create",
+          "fs.write"
+        ],
         "field": "path",
-        "all": ["/.config/systemd/user/"],
-        "any": [".service", ".timer"]
+        "all": [
+          "/.config/systemd/user/"
+        ],
+        "any": [
+          ".service",
+          ".timer"
+        ]
       }
     },
     {
@@ -53,10 +78,1010 @@
       },
       "matcher": {
         "type": "runtime_evidence",
-        "event_ids": ["fs.create", "fs.write", "fs.remove"],
+        "event_ids": [
+          "fs.create",
+          "fs.write",
+          "fs.remove"
+        ],
         "field": "path",
         "all": [],
-        "any": ["/libwebgl64.jar"]
+        "any": [
+          "/libwebgl64.jar"
+        ]
+      }
+    },
+    {
+      "id": "family.fractureiser-client",
+      "title": "Published Fractureiser client namespace indicator",
+      "family": "Fractureiser namespace indicator",
+      "severity": "Warning",
+      "reference": {
+        "label": "Fractureiser mitigation team: technical report (2023)",
+        "url": "https://github.com/trigram-mrp/fractureiser/blob/main/docs/tech.md"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [],
+        "any": [
+          "dev/neko/nekoclient/",
+          "dev.neko.nekoclient."
+        ]
+      }
+    },
+    {
+      "id": "family.fractureiser-injected-method",
+      "title": "Published Fractureiser injected-method indicator",
+      "family": "Fractureiser method indicator",
+      "severity": "Warning",
+      "reference": {
+        "label": "Fractureiser mitigation team: technical report (2023)",
+        "url": "https://github.com/trigram-mrp/fractureiser/blob/main/docs/tech.md"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [],
+        "any": [
+          "_d1385bd3c36f464882460aa4f0484c53",
+          "_f7dba6a3a72049a78a308a774a847180",
+          "_1685f49242dd46ef9c553d8af1a4e0bb"
+        ]
+      }
+    },
+    {
+      "id": "family.fractureiser-infrastructure",
+      "title": "Historical Fractureiser endpoint string indicator (2023)",
+      "family": "Fractureiser historical infrastructure",
+      "severity": "Warning",
+      "reference": {
+        "label": "Fractureiser mitigation team: technical report (2023)",
+        "url": "https://github.com/trigram-mrp/fractureiser/blob/main/docs/tech.md"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [],
+        "any": [
+          "://files-8ie.pages.dev/",
+          "://files-8ie.pages.dev:",
+          "://85.217.144.130:8080/dl"
+        ]
+      }
+    },
+    {
+      "id": "family.weedhack-entrypoint",
+      "title": "Published WeedHack entrypoint indicator",
+      "family": "WeedHack entrypoint indicator",
+      "severity": "Warning",
+      "reference": {
+        "label": "pog5: original WeedHack reverse-engineering analysis (2026)",
+        "url": "https://github.com/pog5/weedhack-analysis"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [],
+        "any": [
+          "initializeweedhack",
+          "dev/majanito/Main",
+          "dev.majanito.Main"
+        ]
+      }
+    },
+    {
+      "id": "family.weedhack-contract",
+      "title": "Published WeedHack Ethereum contract indicator",
+      "family": "WeedHack contract indicator",
+      "severity": "Warning",
+      "reference": {
+        "label": "pog5: original WeedHack reverse-engineering analysis (2026)",
+        "url": "https://github.com/pog5/weedhack-analysis"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [],
+        "any": [
+          "0x1280a841fbc1f883365d3c83122260e0b2995b74"
+        ]
+      }
+    },
+    {
+      "id": "family.weedhack-endpoint",
+      "title": "Historical WeedHack delivery endpoint indicator (March 2026)",
+      "family": "WeedHack historical infrastructure",
+      "severity": "Warning",
+      "reference": {
+        "label": "pog5: original WeedHack reverse-engineering analysis (2026)",
+        "url": "https://github.com/pog5/weedhack-analysis"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [],
+        "any": [
+          "://whnewreceive.ru/"
+        ]
+      }
+    },
+    {
+      "id": "family.weedhack-distribution",
+      "title": "URL string associated with reported WeedHack distribution (August 2026)",
+      "family": "WeedHack distribution URL indicator",
+      "severity": "Warning",
+      "reference": {
+        "label": "McAfee Labs: WeedHack distribution research (August 2026)",
+        "url": "https://www.mcafee.com/blogs/other-blogs/mcafee-labs/weedhack-minecraft-malware-fake-gaming-websites-seo-poisoning/"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [],
+        "any": [
+          "://glazed-client.com/",
+          "://xenoclient.lol/",
+          "://xenonclient.com/",
+          "://nova-client.com/",
+          "://meteorclients.com/",
+          "://22qq-client.com/"
+        ]
+      }
+    },
+    {
+      "id": "family.stargazers-baikal",
+      "title": "Baikal namespace from the published Minecraft stealer campaign",
+      "family": "Minecraft Stargazers campaign namespace indicator",
+      "severity": "Warning",
+      "reference": {
+        "label": "Check Point Research: Minecraft Stargazers campaign (2025)",
+        "url": "https://research.checkpoint.com/2025/minecraft-mod-malware-stargazers/"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [],
+        "any": [
+          "me/baikal/club/",
+          "me.baikal.club."
+        ]
+      }
+    },
+    {
+      "id": "family.stargazers-endpoint",
+      "title": "Historical Minecraft Stargazers campaign endpoint indicator (2025)",
+      "family": "Minecraft Stargazers historical infrastructure",
+      "severity": "Warning",
+      "reference": {
+        "label": "Check Point Research: Minecraft Stargazers campaign (2025)",
+        "url": "https://research.checkpoint.com/2025/minecraft-mod-malware-stargazers/"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [],
+        "any": [
+          "://147.45.79.104/download",
+          "://185.95.159.125/upload",
+          "pastebin.com/raw/xCa3vSiP",
+          "pastebin.com/raw/C9QvUqi3"
+        ]
+      }
+    },
+    {
+      "id": "family.weirdutils-loader",
+      "title": "Published WeirdUtils loader-class indicator",
+      "family": "WeirdUtils loader indicator",
+      "severity": "Warning",
+      "reference": {
+        "label": "MMPA: WeirdUtils original technical analysis (2023)",
+        "url": "https://blog.mmpa.info/posts/weirdutils/"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [],
+        "any": [
+          "org/spongepowered/tools/obfuscation/ObfuscatedClassloader",
+          "org.spongepowered.tools.obfuscation.ObfuscatedClassloader"
+        ]
+      }
+    },
+    {
+      "id": "family.weirdutils-endpoint",
+      "title": "Historical WeirdUtils staging endpoint indicator (2023)",
+      "family": "WeirdUtils historical infrastructure",
+      "severity": "Warning",
+      "reference": {
+        "label": "MMPA: WeirdUtils original technical analysis (2023)",
+        "url": "https://blog.mmpa.info/posts/weirdutils/"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [],
+        "any": [
+          "pastebin.com/raw/4LhnDCtf",
+          "://owouwu.tk/"
+        ]
+      }
+    },
+    {
+      "id": "exploit.java-deserialization",
+      "title": "Object deserialization API correlation; review input trust (BleedingPipe-style)",
+      "family": null,
+      "severity": "Warning",
+      "reference": {
+        "label": "Minecraft AV heuristic; MMPA BleedingPipe research",
+        "url": "https://blog.mmpa.info/posts/bleeding-pipe/"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [
+          "java/io/ObjectInputStream"
+        ],
+        "any": [
+          "readObject",
+          "readUnshared"
+        ]
+      }
+    },
+    {
+      "id": "exploit.jndi-payload",
+      "title": "Visible JNDI lookup payload string; not proof of vulnerable Log4j",
+      "family": null,
+      "severity": "Warning",
+      "reference": {
+        "label": "Apache Logging Services security advisories",
+        "url": "https://logging.apache.org/security.html"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [],
+        "any": [
+          "${jndi:",
+          "jndi:ldap://",
+          "jndi:rmi://",
+          "jndi:dns://"
+        ]
+      }
+    },
+    {
+      "id": "behavior.discord-token-store",
+      "title": "Discord and LevelDB token-store references in the same input",
+      "family": null,
+      "severity": "Warning",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1528 Application access tokens",
+        "url": "https://attack.mitre.org/techniques/T1528/"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [
+          "discord"
+        ],
+        "any": [
+          "Local Storage/leveldb",
+          "Local Storage\\leveldb",
+          "dQw4w9WgXcQ:"
+        ]
+      }
+    },
+    {
+      "id": "behavior.chromium-login-store",
+      "title": "Chromium login database and encrypted-password column references",
+      "family": null,
+      "severity": "Warning",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1555.003 Browser credentials",
+        "url": "https://attack.mitre.org/techniques/T1555/003/"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [
+          "Login Data"
+        ],
+        "any": [
+          "password_value",
+          "encrypted_password"
+        ]
+      }
+    },
+    {
+      "id": "behavior.firefox-login-store",
+      "title": "Firefox login-store and key-database references",
+      "family": null,
+      "severity": "Warning",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1555.003 Browser credentials",
+        "url": "https://attack.mitre.org/techniques/T1555/003/"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [
+          "logins.json"
+        ],
+        "any": [
+          "key4.db",
+          "key3.db",
+          "encryptedPassword"
+        ]
+      }
+    },
+    {
+      "id": "behavior.browser-cookie-store",
+      "title": "Browser cookie database and encrypted-value references",
+      "family": null,
+      "severity": "Warning",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1555.003 Browser credentials",
+        "url": "https://attack.mitre.org/techniques/T1555/003/"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [
+          "cookies",
+          "encrypted_value"
+        ],
+        "any": []
+      }
+    },
+    {
+      "id": "behavior.private-key-files",
+      "title": "Private-key filename with Java file-reading API",
+      "family": null,
+      "severity": "Warning",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1552.004 Private keys",
+        "url": "https://attack.mitre.org/techniques/T1552/004/"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [
+          "java/nio/file/Files"
+        ],
+        "any": [
+          "id_rsa",
+          "id_ed25519",
+          "private-keys-v1.d"
+        ]
+      }
+    },
+    {
+      "id": "behavior.cloud-credential-files",
+      "title": "Cloud or CLI credential location with Java file-reading API",
+      "family": null,
+      "severity": "Warning",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1552.001 Credentials in files",
+        "url": "https://attack.mitre.org/techniques/T1552/001/"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [
+          "java/nio/file/Files"
+        ],
+        "any": [
+          ".aws/credentials",
+          ".aws\\credentials",
+          ".config/gh/hosts.yml",
+          "application_default_credentials.json"
+        ]
+      }
+    },
+    {
+      "id": "behavior.launcher-account-files",
+      "title": "Launcher account-store reference with network-capable Java code",
+      "family": null,
+      "severity": "Warning",
+      "reference": {
+        "label": "Minecraft AV heuristic; Check Point Minecraft stealer research (2025)",
+        "url": "https://research.checkpoint.com/2025/minecraft-mod-malware-stargazers/"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [
+          "java/net/"
+        ],
+        "any": [
+          "launcher_accounts.json",
+          "launcher_profiles.json",
+          "microsoft_accounts.json",
+          "microsoft_accounts.jcon"
+        ]
+      }
+    },
+    {
+      "id": "behavior.telegram-session",
+      "title": "Telegram session-directory and archive API references",
+      "family": null,
+      "severity": "Warning",
+      "reference": {
+        "label": "Minecraft AV heuristic; Check Point Minecraft stealer research (2025)",
+        "url": "https://research.checkpoint.com/2025/minecraft-mod-malware-stargazers/"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [
+          "tdata",
+          "java/util/zip/ZipOutputStream"
+        ],
+        "any": []
+      }
+    },
+    {
+      "id": "behavior.wallet-file-network",
+      "title": "Wallet-store reference with network-capable Java code",
+      "family": null,
+      "severity": "Warning",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1552.001 Credentials in files",
+        "url": "https://attack.mitre.org/techniques/T1552/001/"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [
+          "java/net/"
+        ],
+        "any": [
+          "wallet.dat",
+          "electrum/wallets",
+          "electrum\\wallets",
+          "exodus.wallet"
+        ]
+      }
+    },
+    {
+      "id": "behavior.webhook-reference",
+      "title": "Discord webhook endpoint reference; legitimate integrations also match",
+      "family": null,
+      "severity": "Info",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1567.004 Webhook exfiltration",
+        "url": "https://attack.mitre.org/techniques/T1567/004/"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [],
+        "any": [
+          "discord.com/api/webhooks/",
+          "discordapp.com/api/webhooks/"
+        ]
+      }
+    },
+    {
+      "id": "behavior.powershell-encoded",
+      "title": "PowerShell with an encoded-command option",
+      "family": null,
+      "severity": "Warning",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1059.001 PowerShell",
+        "url": "https://attack.mitre.org/techniques/T1059/001/"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [
+          "powershell"
+        ],
+        "any": [
+          "-encodedcommand",
+          "-enc "
+        ]
+      }
+    },
+    {
+      "id": "behavior.defender-tamper",
+      "title": "Defender preference command with disabling or exclusion options",
+      "family": null,
+      "severity": "Warning",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1562.001 Impair defenses",
+        "url": "https://attack.mitre.org/techniques/T1562/001/"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [
+          "-MpPreference"
+        ],
+        "any": [
+          "-DisableRealtimeMonitoring",
+          "-DisableBehaviorMonitoring",
+          "-ExclusionPath",
+          "-ExclusionProcess"
+        ]
+      }
+    },
+    {
+      "id": "behavior.registry-run",
+      "title": "Registry Run key with a registry modification command",
+      "family": null,
+      "severity": "Warning",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1547.001 Registry Run keys",
+        "url": "https://attack.mitre.org/techniques/T1547/001/"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [
+          "\\CurrentVersion\\Run"
+        ],
+        "any": [
+          "reg add",
+          "New-ItemProperty",
+          "Set-ItemProperty"
+        ]
+      }
+    },
+    {
+      "id": "behavior.scheduled-task",
+      "title": "Scheduled-task creation command reference",
+      "family": null,
+      "severity": "Warning",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1053.005 Scheduled task",
+        "url": "https://attack.mitre.org/techniques/T1053/005/"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [
+          "schtasks",
+          "/create"
+        ],
+        "any": []
+      }
+    },
+    {
+      "id": "behavior.cmstp",
+      "title": "CMSTP binary and unattended-install option references",
+      "family": null,
+      "severity": "Warning",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1218.003 CMSTP",
+        "url": "https://attack.mitre.org/techniques/T1218/003/"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [
+          "cmstp.exe",
+          "/s "
+        ],
+        "any": []
+      }
+    },
+    {
+      "id": "behavior.native-keyboard-hook",
+      "title": "Native global keyboard hook API correlation",
+      "family": null,
+      "severity": "Warning",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1056.001 Keylogging",
+        "url": "https://attack.mitre.org/techniques/T1056/001/"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [
+          "SetWindowsHookEx"
+        ],
+        "any": [
+          "WH_KEYBOARD_LL",
+          "KBDLLHOOKSTRUCT"
+        ]
+      }
+    },
+    {
+      "id": "behavior.screen-capture",
+      "title": "Java screen-capture API reference; can be legitimate",
+      "family": null,
+      "severity": "Info",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1113 Screen capture",
+        "url": "https://attack.mitre.org/techniques/T1113/"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [
+          "java/awt/Robot",
+          "createScreenCapture"
+        ],
+        "any": []
+      }
+    },
+    {
+      "id": "behavior.webcam-capture",
+      "title": "Java webcam capture library reference; can be legitimate",
+      "family": null,
+      "severity": "Info",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1125 Video capture",
+        "url": "https://attack.mitre.org/techniques/T1125/"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [],
+        "any": [
+          "com/github/sarxos/webcam/Webcam",
+          "org/bytedeco/javacv/OpenCVFrameGrabber"
+        ]
+      }
+    },
+    {
+      "id": "behavior.clipboard-network",
+      "title": "Clipboard-reading and Java networking references in the same input",
+      "family": null,
+      "severity": "Info",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1115 Clipboard data",
+        "url": "https://attack.mitre.org/techniques/T1115/"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [
+          "getSystemClipboard",
+          "getData",
+          "java/net/"
+        ],
+        "any": []
+      }
+    },
+    {
+      "id": "behavior.mining-protocol",
+      "title": "Cryptocurrency mining protocol URI reference",
+      "family": null,
+      "severity": "Warning",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1496 Resource hijacking",
+        "url": "https://attack.mitre.org/techniques/T1496/"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [],
+        "any": [
+          "stratum+tcp://",
+          "stratum+ssl://"
+        ]
+      }
+    },
+    {
+      "id": "behavior.vm-process-check",
+      "title": "Process enumeration with VM or analysis-tool process names",
+      "family": null,
+      "severity": "Warning",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1497.001 System checks",
+        "url": "https://attack.mitre.org/techniques/T1497/001/"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [
+          "tasklist"
+        ],
+        "any": [
+          "VBoxService.exe",
+          "vmtoolsd.exe",
+          "Wireshark.exe",
+          "HTTPDebuggerUI.exe",
+          "tcpview.exe"
+        ]
+      }
+    },
+    {
+      "id": "behavior.remote-class-loader",
+      "title": "Java URL class loading with an HTTP URL; review origin",
+      "family": null,
+      "severity": "Warning",
+      "reference": {
+        "label": "Minecraft AV heuristic; Oracle ClassLoader documentation",
+        "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ClassLoader.html"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [
+          "java/net/URLClassLoader"
+        ],
+        "any": [
+          "http://",
+          "https://"
+        ]
+      }
+    },
+    {
+      "id": "behavior.decoded-class-loader",
+      "title": "Base64 decoding with dynamic class definition; can be legitimate",
+      "family": null,
+      "severity": "Info",
+      "reference": {
+        "label": "Minecraft AV heuristic; Oracle ClassLoader documentation",
+        "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ClassLoader.html"
+      },
+      "matcher": {
+        "type": "static_strings",
+        "all": [
+          "java/util/Base64",
+          "defineClass"
+        ],
+        "any": []
+      }
+    },
+    {
+      "id": "runtime.xdg-autostart",
+      "title": "Observed change to an XDG desktop autostart path",
+      "family": null,
+      "severity": "Warning",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1547.013 XDG autostart",
+        "url": "https://attack.mitre.org/techniques/T1547/013/"
+      },
+      "matcher": {
+        "type": "runtime_evidence",
+        "event_ids": [
+          "fs.create",
+          "fs.write",
+          "fs.remove"
+        ],
+        "field": "path",
+        "all": [
+          "/.config/autostart/",
+          ".desktop"
+        ],
+        "any": []
+      }
+    },
+    {
+      "id": "runtime.shell-startup",
+      "title": "Observed change to a shell startup-file path",
+      "family": null,
+      "severity": "Warning",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1546.004 Unix shell configuration",
+        "url": "https://attack.mitre.org/techniques/T1546/004/"
+      },
+      "matcher": {
+        "type": "runtime_evidence",
+        "event_ids": [
+          "fs.create",
+          "fs.write",
+          "fs.remove"
+        ],
+        "field": "path",
+        "all": [],
+        "any": [
+          "/.bashrc",
+          "/.bash_profile",
+          "/.profile",
+          "/.zshrc",
+          "/.zprofile",
+          "/.config/fish/config.fish"
+        ]
+      }
+    },
+    {
+      "id": "runtime.ssh-authorized-keys",
+      "title": "Observed change to an SSH authorized-keys path",
+      "family": null,
+      "severity": "Warning",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1098.004 SSH authorized keys",
+        "url": "https://attack.mitre.org/techniques/T1098/004/"
+      },
+      "matcher": {
+        "type": "runtime_evidence",
+        "event_ids": [
+          "fs.create",
+          "fs.write",
+          "fs.remove"
+        ],
+        "field": "path",
+        "all": [
+          "/.ssh/authorized_keys"
+        ],
+        "any": []
+      }
+    },
+    {
+      "id": "runtime.ssh-private-key",
+      "title": "Observed change to a private-key path; not a read observation",
+      "family": null,
+      "severity": "Warning",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1552.004 Private keys",
+        "url": "https://attack.mitre.org/techniques/T1552/004/"
+      },
+      "matcher": {
+        "type": "runtime_evidence",
+        "event_ids": [
+          "fs.create",
+          "fs.write",
+          "fs.remove"
+        ],
+        "field": "path",
+        "all": [],
+        "any": [
+          "/.ssh/id_rsa",
+          "/.ssh/id_ed25519",
+          "/.ssh/id_ecdsa",
+          "/.gnupg/private-keys-v1.d/"
+        ]
+      }
+    },
+    {
+      "id": "runtime.cloud-credential-file",
+      "title": "Observed change to a cloud or CLI credential path",
+      "family": null,
+      "severity": "Warning",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1552.001 Credentials in files",
+        "url": "https://attack.mitre.org/techniques/T1552/001/"
+      },
+      "matcher": {
+        "type": "runtime_evidence",
+        "event_ids": [
+          "fs.create",
+          "fs.write",
+          "fs.remove"
+        ],
+        "field": "path",
+        "all": [],
+        "any": [
+          "/.aws/credentials",
+          "/.config/gh/hosts.yml",
+          "/application_default_credentials.json"
+        ]
+      }
+    },
+    {
+      "id": "runtime.cron-path",
+      "title": "Observed change beneath a cron configuration path",
+      "family": null,
+      "severity": "Warning",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1053.003 Cron",
+        "url": "https://attack.mitre.org/techniques/T1053/003/"
+      },
+      "matcher": {
+        "type": "runtime_evidence",
+        "event_ids": [
+          "fs.create",
+          "fs.write",
+          "fs.remove"
+        ],
+        "field": "path",
+        "all": [],
+        "any": [
+          "/etc/cron.d/",
+          "/etc/crontab",
+          "/var/spool/cron/"
+        ]
+      }
+    },
+    {
+      "id": "runtime.systemd-system-unit",
+      "title": "Observed change to a system systemd unit path",
+      "family": null,
+      "severity": "Warning",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1543.002 Systemd services",
+        "url": "https://attack.mitre.org/techniques/T1543/002/"
+      },
+      "matcher": {
+        "type": "runtime_evidence",
+        "event_ids": [
+          "fs.create",
+          "fs.write",
+          "fs.remove"
+        ],
+        "field": "path",
+        "all": [
+          "/etc/systemd/system/"
+        ],
+        "any": [
+          ".service",
+          ".timer"
+        ]
+      }
+    },
+    {
+      "id": "runtime.shell-tcp",
+      "title": "Observed suspicious child command containing a shell TCP device path",
+      "family": null,
+      "severity": "Warning",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1059.004 Unix shell",
+        "url": "https://attack.mitre.org/techniques/T1059/004/"
+      },
+      "matcher": {
+        "type": "runtime_evidence",
+        "event_ids": [
+          "process.suspicious_child"
+        ],
+        "field": "child_command",
+        "all": [],
+        "any": [
+          "/dev/tcp/",
+          "/dev/udp/"
+        ]
+      }
+    },
+    {
+      "id": "runtime.curl-transfer",
+      "title": "Observed curl child command containing an HTTP URL",
+      "family": null,
+      "severity": "Info",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1105 Ingress tool transfer",
+        "url": "https://attack.mitre.org/techniques/T1105/"
+      },
+      "matcher": {
+        "type": "runtime_evidence",
+        "event_ids": [
+          "process.suspicious_child"
+        ],
+        "field": "child_command",
+        "all": [
+          "curl "
+        ],
+        "any": [
+          "http://",
+          "https://"
+        ]
+      }
+    },
+    {
+      "id": "runtime.wget-transfer",
+      "title": "Observed wget child command containing an HTTP URL",
+      "family": null,
+      "severity": "Info",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1105 Ingress tool transfer",
+        "url": "https://attack.mitre.org/techniques/T1105/"
+      },
+      "matcher": {
+        "type": "runtime_evidence",
+        "event_ids": [
+          "process.suspicious_child"
+        ],
+        "field": "child_command",
+        "all": [
+          "wget "
+        ],
+        "any": [
+          "http://",
+          "https://"
+        ]
+      }
+    },
+    {
+      "id": "runtime.python-execution",
+      "title": "Observed Python child command with inline code",
+      "family": null,
+      "severity": "Warning",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1059.006 Python",
+        "url": "https://attack.mitre.org/techniques/T1059/006/"
+      },
+      "matcher": {
+        "type": "runtime_evidence",
+        "event_ids": [
+          "process.suspicious_child"
+        ],
+        "field": "child_command",
+        "all": [
+          "python",
+          " -c "
+        ],
+        "any": []
+      }
+    },
+    {
+      "id": "runtime.socat-exec",
+      "title": "Observed socat child command referencing process execution",
+      "family": null,
+      "severity": "Warning",
+      "reference": {
+        "label": "Minecraft AV heuristic; MITRE ATT&CK T1059.004 Unix shell",
+        "url": "https://attack.mitre.org/techniques/T1059/004/"
+      },
+      "matcher": {
+        "type": "runtime_evidence",
+        "event_ids": [
+          "process.suspicious_child"
+        ],
+        "field": "child_command",
+        "all": [
+          "socat "
+        ],
+        "any": [
+          "EXEC:",
+          "SYSTEM:"
+        ]
       }
     }
   ]
